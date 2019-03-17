@@ -7,7 +7,7 @@ Main technologies/tools:
 - Angular
 - papaparse
 - Typescript
-- D3.js
+- Chart.js
 
 
 ## Development server
