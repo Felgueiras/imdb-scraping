@@ -8,6 +8,8 @@ Main technologies/tools:
 - papaparse
 - Typescript
 - Chart.js
+- Node.js
+- Express
 
 
 ## Development server
