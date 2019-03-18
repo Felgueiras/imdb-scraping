@@ -3,12 +3,15 @@ import { AppComponent } from 'src/app/app.component';
 import { ChartComponent } from 'src/app/chart/chart.component';
 import { ChartsModule } from 'ng2-charts';
 
-import {f} from './dummy'
- 
+import { f } from './dummy'
+import { ScraperComponent } from 'src/app/scraper/scraper.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 const baseMetadata = {
     imports: [
-        ChartsModule
+        ChartsModule,
+        HttpClientModule
     ],
     schemas: [],
     declarations: [
@@ -50,3 +53,11 @@ storiesOf('Chart', module)
             files: f
         }
     }));
+
+storiesOf('Scraping', module)
+    .addDecorator(
+        moduleMetadata(baseMetadata)
+    )
+    .add('Scraper', () => ({
+        component: ScraperComponent
+    }))

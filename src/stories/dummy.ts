@@ -15,7 +15,6 @@ for (let index = 0; index < 100; index++) {
     aux[ImdbApi.runtimeIndex] = getRandomInt(30, 160);
     files.push(aux);
 }
-console.log(files);
 
 
 export const f = files;
