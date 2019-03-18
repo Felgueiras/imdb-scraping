@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.imdb.com/list/ls069699706/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=4dc7ad1a-76a6-49eb-9acb-5d6959572df8&pf_rd_r=ZJATV9C4EXQ1FE10VD3V&pf_rd_s=right-4&pf_rd_t=48201&pf_rd_i=watchlist&ref_=ttls_vw_grd&sort=list_order,asc&st_dt=&mode=grid&page='
+const url = 'https://www.imdb.com/list/ls069699706/?mode=grid&page='
 
 const express = require('express');
 var cors = require('cors');
@@ -20,6 +20,14 @@ async function run() {
     let movies = [];
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
+    // avoid images
+    await page.setRequestInterception(true);
+    page.on('request', request => {
+        if (request.resourceType() === 'image' || request.resourceType() === 'stylesheet' || request.resourceType() === 'font')
+            request.abort();
+        else
+            request.continue();
+    });
     while (pageExists) {
         let imdbURL = url + pageNum;
         await page.goto(imdbURL);
@@ -42,10 +50,7 @@ async function run() {
     return movies;
 }
 
-
-// app.use(require('express-static')('./'));
-
-let nodePort = (process.env.NODE_PORT) ? Number(process.env.NODE_PORT) : 3002;
-console.log('Listening on ', nodePort);
+let nodePort = (process.env.NODE_PORT) ? Number(process.env.NODE_PORT) :3002;
+console.log(`Listening on http://localhost:${nodePort}`);
 
 app.listen(nodePort);
